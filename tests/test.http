@@ -10,7 +10,7 @@ Content-Type: application/json
 GET http://localhost:5000
 
 ###
-GET http://localhost:5000/contact
+GET http://localhost:5000/contact?limit=10&offset=0
 
 ###
 POST http://localhost:5000/contact
