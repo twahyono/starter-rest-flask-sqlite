@@ -18,7 +18,7 @@ def get_contact():
         con = get_db()
         cur = con.cursor()
         contact = cur.execute(
-            "select name,email,createdAt from contact limit ? offset ?", (limit, offset)
+            "select id,name,email,createdAt from contact limit ? offset ?", (limit, offset)
         ).fetchall()
         columns = [col[0] for col in cur.description]
         data = [dict(zip(columns, row)) for row in contact]
@@ -65,14 +65,13 @@ def update_contact_by_id(id):
     updateContact = request.get_json()
     con = get_db()
 
-    contact = con.execute(
-        "update contact set name=?, email=? phone=? where id=?",
+    cur = con.execute(
+        "update contact set name=?, email=?, phone=? where id=?",
         (updateContact["name"], updateContact["email"], updateContact["phone"], id),
     )
     con.commit()
-    columns = ["id", "name", "email", "phone"]
-    data = dict(zip(columns, contact))
-    return json.dumps(data, default=str)
+    updateContact["id"]=id
+    return json.dumps(updateContact, default=str)
 
 
 @bp.delete("/contact/<int:id>")

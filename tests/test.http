@@ -21,3 +21,16 @@ Content-Type: application/json
     "email":"medina@gmail.com",
     "phone":"9888399333"
 }
+
+###
+DELETE http://localhost:5000/contact/1
+
+###
+PUT http://localhost:5000/contact/2
+Content-Type: application/json
+
+{
+    "name":"Kataky Smile",
+    "email":"kataky@gmail.com",
+    "phone":"9888399333"
+}

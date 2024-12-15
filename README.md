@@ -1,6 +1,6 @@
-# Starter Application
+# Starter Project
 
-This is a simple starter application. 
+This is a simple starter project for rest api application using flask and sqlite tech stack. 
 
 Copyright (c) 2018 The Python Packaging Authority
 
@@ -31,5 +31,5 @@ py db/seed.py
 
 # Running the app
 ```
-flask run
+flask run --debug
 ```

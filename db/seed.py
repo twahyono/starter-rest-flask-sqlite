@@ -5,17 +5,6 @@ con = sqlite3.connect("./db/dev.db")
 cur = con.cursor()
 cur.execute("DROP TABLE IF EXISTS user;")
 cur.execute("DROP TABLE IF EXISTS contact;")
-cur.execute("DROP TABLE IF EXISTS thread;")
-
-cur.execute(
-    """
-        CREATE TABLE thread(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        threadId INTEGER NOT NULL, 
-        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
-    """
-)
 
 cur.execute(
     """
