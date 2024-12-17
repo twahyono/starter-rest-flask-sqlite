@@ -37,3 +37,13 @@ flask run --debug
 # Environment variables
 Please define environment variable as following:\
 JWT_SECRET=somesecret
+
+# rest client
+Rest client for testing the endpoint available at folder:\
+```
+test/test.http
+```
+
+Please install [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension for VS Code\
+
+In test.http file check for this endpoint http://localhost:5000/auth to get the access token
