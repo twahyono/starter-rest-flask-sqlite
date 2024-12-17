@@ -33,3 +33,7 @@ py db/seed.py
 ```
 flask run --debug
 ```
+
+# Environment variables
+Please define environment variable as following:\
+JWT_SECRET=somesecret
