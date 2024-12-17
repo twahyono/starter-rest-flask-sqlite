@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from db.db import get_db
 import sqlite3
 import json
+import jwt
+import os
 
 bp = Blueprint("contact", __name__)
 
@@ -9,6 +11,9 @@ bp = Blueprint("contact", __name__)
 @bp.get("/contact")
 def get_contact():
     try:
+        authorizationHeader = request.headers.get("Authorization")
+        token = authorizationHeader.split()[1]
+        decoded = jwt.decode(token, os.getenv("JWT_SECRET"), algorithms=["HS256"])
         limit = request.args.get("limit")
         offset = request.args.get("offset")
         if limit is None:
@@ -24,10 +29,18 @@ def get_contact():
         data = [dict(zip(columns, row)) for row in contact]
         to_json = json.dumps(data, indent=2, default=str)
         return to_json
-
+    except jwt.exceptions.InvalidTokenError as error:
+        print("Error occurred - ", error)
+        return {"code":401, "message": str(error)}, 401
+    except jwt.exceptions.ExpiredSignatureError as error:
+        print("Error occurred - ", error)
+        return {"code":401, "message":str(error)}, 401
     except sqlite3.Error as error:
         print("Error occurred - ", error)
-
+        return {"code":500, "message":str(error)}, 500
+    except Exception as error:
+        print("Error occurred - ", error)
+        return {"code":500, "message":str(error)}, 500
 
 @bp.get("/contact/<int:id>")
 def get_contact_by_id(id):

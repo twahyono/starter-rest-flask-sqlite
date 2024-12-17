@@ -3,6 +3,9 @@ from flask import Blueprint, request
 from db.db import get_db
 import sqlite3
 import bcrypt
+import jwt
+from datetime import datetime, timedelta, timezone
+import os
 
 bp = Blueprint("auth", __name__)
 
@@ -23,7 +26,9 @@ def auth():
         
         columns = ["id","email"]
         data = dict(zip(columns, findUser)) 
-        return json.dumps(data,default=str)
+        encoded = jwt.encode({"user": data,'iat': datetime.now(timezone.utc),
+        'exp': datetime.now(timezone.utc) + timedelta(minutes=20),}, os.getenv("JWT_SECRET"), algorithm="HS256")
+        return json.dumps({"token":encoded},default=str)
 
     except sqlite3.Error as error:
         print("Error occurred - ", error)
@@ -31,3 +36,4 @@ def auth():
 # Convert tuple with product details to dict
 def product_row_to_dict(contact):
     return {"id": contact[0], "email": contact[1]}
+

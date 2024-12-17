@@ -1,3 +1,5 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InN1cGVyYWRtaW5AZ21haWwuY29tIn0sImlhdCI6MTczNDQxMDYyNywiZXhwIjoxNzM0NDEwNzQ3fQ.lz77rJ31naBDXbAF1fAtrm00BbWZgqAsa5uxsu6hx10
+###
 POST http://localhost:5000/auth 
 Content-Type: application/json
 
@@ -11,10 +13,12 @@ GET http://localhost:5000
 
 ###
 GET http://localhost:5000/contact?limit=10&offset=0
+Authorization: Bearer {{token}}
 
 ###
 POST http://localhost:5000/contact
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name":"Medina",
