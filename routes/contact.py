@@ -2,28 +2,8 @@ from flask import Blueprint, request
 from db.db import get_db
 import sqlite3
 import json
-import jwt
-import os
 
 bp = Blueprint("contact", __name__)
-
-# middleware for jwt validation execute before blueprint route
-@bp.before_request
-def jwt_validation():
-    try:
-        authorizationHeader = request.headers.get("Authorization")
-        token = authorizationHeader.split()[1]
-        decoded = jwt.decode(token, os.getenv("JWT_SECRET"), algorithms=["HS256"])
-        print(decoded)
-    except jwt.exceptions.InvalidTokenError as error:
-        print("Error occurred - ", error)
-        return {"code":401, "message": str(error)}, 401
-    except jwt.exceptions.ExpiredSignatureError as error:
-        print("Error occurred - ", error)
-        return {"code":401, "message":str(error)}, 401
-    except Exception as error:
-        print("Error occurred - ", error)
-        return {"code":500, "message":str(error)}, 500
 
 @bp.get("/contact")
 def get_contact():
